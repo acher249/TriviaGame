@@ -35,10 +35,9 @@ hr {
 
 .row {
     text-align: center;
-    margin-left: 0;
-    margin-right: 0;
 }
 
 .btn {
     margin: 10px;
+    min-width: 140px;
 }
