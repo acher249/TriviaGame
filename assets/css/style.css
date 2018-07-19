@@ -1,6 +1,6 @@
 body {
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 .jumbotron {
@@ -11,6 +11,8 @@ body {
 
 .mainTitle {
     text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
 }
 
 .card2 {
@@ -29,10 +31,6 @@ hr {
     border-top: 1px solid rgba(0,0,0,.1);
 }
 
-.lead {
-    font-size: 28px;
-}
-
 .row {
     text-align: center;
 }
@@ -40,4 +38,15 @@ hr {
 .btn {
     margin: 10px;
     min-width: 140px;
+    border-color:  rgb(194, 194, 194);
+    background-color: rgb(216, 216, 216);
+}
+
+.topBar {
+    margin-top: 30px;
+}
+
+.display-4 {
+    padding-top: 20px;
+    font-size: 46px;
 }
