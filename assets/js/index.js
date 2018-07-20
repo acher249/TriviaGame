@@ -1,31 +1,6 @@
 window.onload = function() {
     //on start
-    function welcomeAlert() {    
-    swal({
-        title: "Get Ready For Trivia!",
-        icon: "success",
-        text: "Answer the questions before the timer runs out!",
-        button: "Start Game", 
-    })
-    .then(() => {
-        //Start The Game
-        stopwatch.start();
-        });
-    };
-    setTimeout(welcomeAlert, 1);
-
-    function nextQuestionAlert() {    
-    swal({
-        title: "Get Ready For The Next Question!",
-        icon: "success",
-        text: "Answer the question before the timer runs out!",
-        button: "Next Question", 
-    })
-    .then(() => {
-        //Start The Game
-        stopwatch.start();
-        });
-    };
+    welcomeAlert();
 
     //******use these functions in stopwatch object to build game********
     $("#stop").on("click", stopwatch.stop);
@@ -42,19 +17,7 @@ var stopwatch = {
 
     time: 0,
 
-    nextQuestionAlert: function() {    
-    swal({
-        title: "Out of Time!",
-        icon: "error",
-        text: "Get Ready For The Next Question!",
-        button: "Next Question", 
-    })
-    .then(() => {
-        //Start The Game
-        stopwatch.start();
-        $(".timer").text("Time Remaining: " + "00:30");
-        });
-    },
+    
 
     reset: function() {
 
@@ -71,7 +34,7 @@ var stopwatch = {
         intervalId = setInterval(stopwatch.count, 1000);
         clockRunning = true;
         //**************************    SET TIMER    */
-        stopwatch.time = 30;
+        stopwatch.time = 5;
         }
     },
 
@@ -96,7 +59,7 @@ var stopwatch = {
             console.log("times up");
             $(".timer").text("Time Remaining: " + "00:00");
 
-            stopwatch.nextQuestionAlert();
+            nextQuestionAlert();
         }
     },
 
@@ -119,3 +82,33 @@ var stopwatch = {
         return minutes + ":" + seconds;
     }
 };
+
+
+//Alert Functions ******
+
+function nextQuestionAlert() {    
+swal({
+    title: "Out of Time!",
+    icon: "error",
+    text: "Get Ready For The Next Question!",
+    button: "Next Question", 
+})
+.then(() => {
+    //Start The Game
+    stopwatch.start();
+    $(".timer").text("Time Remaining: " + "00:05"); //Override***
+    });
+}
+
+function welcomeAlert() {    
+    swal({
+        title: "Get Ready For Trivia!",
+        icon: "success",
+        text: "Answer the questions before the timer runs out!",
+        button: "Start Game", 
+    })
+    .then(() => {
+        //Start The Game
+        stopwatch.start();
+        });
+    };
