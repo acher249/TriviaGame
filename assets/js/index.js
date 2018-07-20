@@ -1,36 +1,37 @@
-var startCard = $(".startCard");
-var mainCard = $(".mainCard");
-
 window.onload = function() {
     //on start
-    function welcomeAlert() {
-    mainCard.hide();
-    
+    function welcomeAlert() {    
     swal({
         title: "Get Ready For Trivia!",
         icon: "success",
         text: "Answer the questions before the timer runs out!",
-        button: "Continue", 
-    });  
-    }
+        button: "Start Game", 
+    })
+    .then(() => {
+        //Start The Game
+        stopwatch.start();
+        });
+    };
     setTimeout(welcomeAlert, 1);
 
-    $("#startButton").on("click", startGame);
+    function nextQuestionAlert() {    
+    swal({
+        title: "Get Ready For The Next Question!",
+        icon: "success",
+        text: "Answer the question before the timer runs out!",
+        button: "Next Question", 
+    })
+    .then(() => {
+        //Start The Game
+        stopwatch.start();
+        });
+    };
 
     //******use these functions in stopwatch object to build game********
     $("#stop").on("click", stopwatch.stop);
     $("#reset").on("click", stopwatch.reset);
     $("#start").on("click", stopwatch.start);
 };
-
-function startGame(){
-    startCard.hide();
-    mainCard.show();
-
-    stopwatch.start();
-    // $(".timer").text("Time Remaining: " + converted);
-
-}
 
 //  Variable that will hold our setInterval that runs the stopwatch
 var intervalId;
@@ -40,6 +41,20 @@ var clockRunning = false;
 var stopwatch = {
 
     time: 0,
+
+    nextQuestionAlert: function() {    
+    swal({
+        title: "Out of Time!",
+        icon: "error",
+        text: "Get Ready For The Next Question!",
+        button: "Next Question", 
+    })
+    .then(() => {
+        //Start The Game
+        stopwatch.start();
+        $(".timer").text("Time Remaining: " + "00:30");
+        });
+    },
 
     reset: function() {
 
@@ -74,6 +89,15 @@ var stopwatch = {
         var converted = stopwatch.timeConverter(stopwatch.time);
         console.log(converted);
         $(".timer").text("Time Remaining: " + converted);
+
+        //Time is Up
+        if(stopwatch.time < 0){
+            stopwatch.stop();
+            console.log("times up");
+            $(".timer").text("Time Remaining: " + "00:00");
+
+            stopwatch.nextQuestionAlert();
+        }
     },
 
     timeConverter: function(t) {
