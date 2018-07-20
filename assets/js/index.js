@@ -26,6 +26,10 @@ window.onload = function() {
 function startGame(){
     startCard.hide();
     mainCard.show();
+
+    stopwatch.start();
+    // $(".timer").text("Time Remaining: " + converted);
+
 }
 
 //  Variable that will hold our setInterval that runs the stopwatch
@@ -36,15 +40,13 @@ var clockRunning = false;
 var stopwatch = {
 
     time: 0,
-    lap: 1,
 
     reset: function() {
 
         stopwatch.time = 0;
-        stopwatch.lap = 1;
 
         // DONE: Change the "display" div to "00:00."
-        $("#display").text("00:00");
+        $(".timer").text("Time Remaining: " + "00:00");
     },
 
     start: function() {
@@ -53,6 +55,8 @@ var stopwatch = {
         if (!clockRunning) {
         intervalId = setInterval(stopwatch.count, 1000);
         clockRunning = true;
+        //**************************    SET TIMER    */
+        stopwatch.time = 30;
         }
     },
 
@@ -65,16 +69,11 @@ var stopwatch = {
 
     count: function() {
 
-        // DONE: increment time by 1, remember we cant use "this" here.
-        stopwatch.time++;
+        stopwatch.time--;
 
-        // DONE: Get the current time, pass that into the stopwatch.timeConverter function,
-        //       and save the result in a variable.
         var converted = stopwatch.timeConverter(stopwatch.time);
         console.log(converted);
-
-        // DONE: Use the variable we just created to show the converted time in the "display" div.
-        $("#display").text(converted);
+        $(".timer").text("Time Remaining: " + converted);
     },
 
     timeConverter: function(t) {
