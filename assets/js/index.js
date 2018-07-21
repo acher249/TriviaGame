@@ -7,6 +7,7 @@ window.onload = function() {
 //  Variable that will hold our setInterval that runs the stopwatch
 var intervalId;
 var clockRunning = false;
+var questionCount = 0;
 
 // Our stopwatch object ********************************************************
 var stopwatch = {
@@ -27,7 +28,7 @@ var stopwatch = {
         intervalId = setInterval(stopwatch.count, 1000);
         clockRunning = true;
         //**************************    SET TIMER    */
-        stopwatch.time = 5;
+        stopwatch.time = 10;
         }
     },
 
@@ -74,6 +75,9 @@ var stopwatch = {
         return minutes + ":" + seconds;
     },
 
+    //Button Click
+
+
     //Alert Functions ******
     nextQuestionAlert: function() {    
     swal({
@@ -85,7 +89,9 @@ var stopwatch = {
     .then(() => {
         //Start The Game
         stopwatch.start();
-        $(".timer").text("Time Remaining: " + "00:05"); //Override***
+        $(".timer").text("Time Remaining: " + "00:10"); //Override***
+        //if no button clicked
+        questionCount ++;
         });
     },
     
@@ -100,6 +106,8 @@ var stopwatch = {
         //Start The Game
         stopwatch.start();
         addButtonHTML(q0_AnswerArray);
+        addQuestionHTML(rainQuestionArray, 0);
+        questionCount ++;
         });
     }
 };
@@ -117,21 +125,32 @@ var rainQuestionArray = ["What is the shape of rain drops?",
 
 var q0_AnswerArray = ["square", "droplet", "hexagonal", "rhombus"];
 var q0_Answer = "droplet";
+var q1_AnswerArray = ["red", "purple", "blue", "pink"];
+var q1_Answer = "blue";
 
 
-//function to add to html
-
-function addButtonHTML(array){
-    for(i=0; i<4; i++){
-        $("#answer" + i).text(array[i]);
-        console.log(array[i]);
+//function to add to text button html. Pass it the AnswersArray.
+function addButtonHTML(answerArray){
+    for(i=0; i<answerArray.length; i++){
+        $("#answer" + i).text(answerArray[i]);
+        console.log(answerArray[i]);
     }
 }
 
+function addQuestionHTML(questionArray, index){
+    $(".question").text(questionArray[index]);
+    console.log(questionArray[index]);
+}
 
+//****************************************************************/
+// get which button is clicked
 
-
-
+function buttonClicked(clicked_id)
+{
+    alert(clicked_id);
+    // fill array with if answer was right or wrong
+    // push the next question and next answers
+}
 
 
 
