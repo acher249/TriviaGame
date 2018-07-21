@@ -16,10 +16,8 @@ var stopwatch = {
 
     reset: function() {
 
-        stopwatch.time = 0;
-
-        // DONE: Change the "display" div to "00:00."
-        $(".timer").text("Time Remaining: " + "00:00");
+        stopwatch.time = 10;
+        $(".timer").text("Time Remaining: " + "00:10");
     },
 
     start: function() {
@@ -28,7 +26,7 @@ var stopwatch = {
         intervalId = setInterval(stopwatch.count, 1000);
         clockRunning = true;
         //**************************    SET TIMER    */
-        stopwatch.time = 15;
+        stopwatch.time = 10;
         }
     },
 
@@ -43,13 +41,13 @@ var stopwatch = {
         stopwatch.time--;
 
         var converted = stopwatch.timeConverter(stopwatch.time);
-        console.log(converted);
+        // console.log(converted);
         $(".timer").text("Time Remaining: " + converted);
 
         //Time is Up
         if(stopwatch.time < 0){
             stopwatch.stop();
-            console.log("times up");
+            // console.log("times up");
             $(".timer").text("Time Remaining: " + "00:00");
 
             stopwatch.nextQuestionAlert();
@@ -88,10 +86,13 @@ var stopwatch = {
     })
     .then(() => {
         //Start The Game
+        stopwatch.reset();
         stopwatch.start();
-        $(".timer").text("Time Remaining: " + "00:15"); //Override***
+        $(".timer").text("Time Remaining: " + "00:10"); //Override***
         //if no button clicked
         currentQuestionIndex ++;
+        
+        setHTML();
         });
     },
     
@@ -99,15 +100,26 @@ var stopwatch = {
     swal({
         title: "Get Ready For Trivia!",
         icon: "success",
-        text: "Answer the questions before the timer runs out!",
+        text: "AnswerId the questions before the timer runs out!",
         button: "Start Game", 
     })
     .then(() => {
         //Start The Game
         stopwatch.start();
-        addButtonHTML(q0.AnswerArray);
-        addQuestionHTML(rainQuestionArray, 0);
-        currentQuestionIndex ++;
+        setHTML();
+        });
+    },
+
+    gaveOver: function() {    
+    swal({
+        title: "You Finished Trivia!",
+        icon: "success",
+        text: "Good Job!",
+        button: "Continue", 
+    })
+    .then(() => {
+        stopwatch.stop();
+        //Do somthing when game finishes
         });
     }
 };
@@ -121,72 +133,104 @@ var rainQuestionArray = ["What is the shape of rain drops?",
 "What state of matter is rain?"];
 
 //QUESTION OBJECTS**********************************************
+//shape
 var q0 = {
-    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
-    Answer: "droplet"
+    AnswerArray: ["Square", "Droplet", "Hexagonal", "Rhombus"],
+    AnswerId: "answer1"
 }
+//color
 var q1 = {
-    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
-    Answer: "droplet"
+    AnswerArray: ["Red", "Yellow", "Green", "Blue"],
+    AnswerId: "answer3"
 }
+//city
 var q2 = {
-    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
-    Answer: "droplet"
+    AnswerArray: ["Manhattan", "San Diego", "Austin", "Seattle"],
+    AnswerId: "answer3"
 }
+//volume
 var q3 = {
-    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
-    Answer: "droplet"
+    AnswerArray: ["1/2 gallon", "3/4 gallon", "One Gallon", "None"],
+    AnswerId: "answer2"
 }
+//state of matter
 var q4 = {
-    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
-    Answer: "droplet"
+    AnswerArray: ["Gas", "Solid", "Liquid", "Gaslid"],
+    AnswerId: "answer2"
 }
-
-//function to add to text button html. Pass it the AnswersArray.
-function addButtonHTML(answerArray){
-    for(i=0; i<answerArray.length; i++){
-        //change the button html to the correct text
-        $("#answer" + i).text(answerArray[i]);
-        //give the button the id of the butons contents
-        $("#answer" + i).attr("id", answerArray[i]);
-        console.log(answerArray[i]);
-    }
-}
-
-function addQuestionHTML(questionArray, index){
-    $(".question").text(questionArray[index]);
-    console.log(questionArray[index]);
-}
-
-
 
 //****************************************************************/
 // get which button is clicked
 
-//Assign current question to the correct object
-if(currentQuestionIndex === 0){
-    currentQuestionObjectAnswer = q0.Answer;
-} else if (currentQuestionIndex === 1){
-    currentQuestionObjectAnswer = q1.Answer;
-}else if (currentQuestionIndex === 2){
-    currentQuestionObjectAnswer = q2.Answer;
-}else if (currentQuestionIndex === 3){
-    currentQuestionObjectAnswer = q3.Answer;
-}
-
-//questionObjectAnswer ie: q0.Answer
+//questionObjectAnswer ie: q0.AnswerId
 function buttonClicked(clicked_id)
 {
     // alert(clicked_id);
-    // fill array with if answer was right or wrong
-    currentQuestionIndex++;
+
+    //Get Object Answer
+    if(currentQuestionIndex === 0){
+        currentQuestionObjectAnswer = q0.AnswerId;
+    } else if (currentQuestionIndex === 1){
+        currentQuestionObjectAnswer = q1.AnswerId;
+    }else if (currentQuestionIndex === 2){
+        currentQuestionObjectAnswer = q2.AnswerId;
+    }else if (currentQuestionIndex === 3){
+        currentQuestionObjectAnswer = q3.AnswerId;
+    }else {
+        currentQuestionObjectAnswer = q4.AnswerId;
+    }
+
     var clickedButton = document.getElementById(clicked_id);
     if (clickedButton.id == currentQuestionObjectAnswer){
         console.log("you picked the RIGHT answer");
     }else{
         console.log("you picked the WRONG answer");
     }
-    // push the next question and next answers
+    // fill array with if answer was right or wrong
+    currentQuestionIndex++;
+    if(currentQuestionIndex > 4){
+        stopwatch.gaveOver();
+    }
+    
+    setHTML();
+    
+    stopwatch.reset();
+}
+
+//function to add to text button html. Pass it the AnswersArray.
+function addButtonHTML(answerArray){
+    for(i=0; i<answerArray.length; i++){
+
+        //change the button html to the correct text
+        $("#answer" + i).text(answerArray[i]);
+        // console.log(answerArray[i]);
+        //give the button the id of the butons contents
+        // $("#answer" + i).attr("id", answerArray[i]);
+    }
+}
+
+function addQuestionHTML(questionArray, index){
+    $(".question").text(questionArray[index]);
+    // console.log(questionArray[index]);
+}
+
+function setHTML(){
+    if(currentQuestionIndex === 0){
+        addButtonHTML(q0.AnswerArray);
+        addQuestionHTML(rainQuestionArray, 0);
+    } else if(currentQuestionIndex === 1){
+        addButtonHTML(q1.AnswerArray);
+        addQuestionHTML(rainQuestionArray, 1);
+    } else if (currentQuestionIndex === 2){
+        addButtonHTML(q2.AnswerArray);
+        addQuestionHTML(rainQuestionArray, 2);
+    } else if (currentQuestionIndex === 3){
+        addButtonHTML(q3.AnswerArray);
+        addQuestionHTML(rainQuestionArray, 3);
+    } else {
+        addButtonHTML(q4.AnswerArray);
+        addQuestionHTML(rainQuestionArray, 4);
+    } 
 }
 
 
@@ -204,7 +248,7 @@ $.ajax({
 })
     .then(function(response) {
 
-    console.log(response);
+    // console.log(response);
 
     // Transfer content to HTML
     // $(".city").html("<h1>" + response.name + " Weather Details</h1>");
