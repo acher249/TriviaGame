@@ -7,7 +7,7 @@ window.onload = function() {
 //  Variable that will hold our setInterval that runs the stopwatch
 var intervalId;
 var clockRunning = false;
-var questionCount = 0;
+var currentQuestionIndex = 0;
 
 // Our stopwatch object ********************************************************
 var stopwatch = {
@@ -28,7 +28,7 @@ var stopwatch = {
         intervalId = setInterval(stopwatch.count, 1000);
         clockRunning = true;
         //**************************    SET TIMER    */
-        stopwatch.time = 10;
+        stopwatch.time = 15;
         }
     },
 
@@ -89,9 +89,9 @@ var stopwatch = {
     .then(() => {
         //Start The Game
         stopwatch.start();
-        $(".timer").text("Time Remaining: " + "00:10"); //Override***
+        $(".timer").text("Time Remaining: " + "00:15"); //Override***
         //if no button clicked
-        questionCount ++;
+        currentQuestionIndex ++;
         });
     },
     
@@ -105,9 +105,9 @@ var stopwatch = {
     .then(() => {
         //Start The Game
         stopwatch.start();
-        addButtonHTML(q0_AnswerArray);
+        addButtonHTML(q0.AnswerArray);
         addQuestionHTML(rainQuestionArray, 0);
-        questionCount ++;
+        currentQuestionIndex ++;
         });
     }
 };
@@ -123,16 +123,25 @@ var rainQuestionArray = ["What is the shape of rain drops?",
 "How much rain can fit in a one gallon jug?" , 
 "What state of matter is rain?"];
 
-var q0_AnswerArray = ["square", "droplet", "hexagonal", "rhombus"];
-var q0_Answer = "droplet";
-var q1_AnswerArray = ["red", "purple", "blue", "pink"];
-var q1_Answer = "blue";
+//create object for each question.
+var q0 = {
+    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
+    Answer: "droplet"
+}
+
+// var q0_AnswerArray = ["square", "droplet", "hexagonal", "rhombus"];
+// var q0_Answer = "droplet"; //id "answer1"
+// var q1_AnswerArray = ["red", "purple", "blue", "pink"];
+// var q1_Answer = "blue";
 
 
 //function to add to text button html. Pass it the AnswersArray.
 function addButtonHTML(answerArray){
     for(i=0; i<answerArray.length; i++){
+        //change the button html to the correct text
         $("#answer" + i).text(answerArray[i]);
+        //give the button the id of the butons contents
+        $("#answer" + i).attr("id", answerArray[i]);
         console.log(answerArray[i]);
     }
 }
@@ -142,13 +151,34 @@ function addQuestionHTML(questionArray, index){
     console.log(questionArray[index]);
 }
 
+
+
 //****************************************************************/
 // get which button is clicked
 
+//Assign current question to the correct object
+if(currentQuestionIndex === 0){
+    currentQuestionObjectAnswer = q0.Answer;
+} else if (currentQuestionIndex === 1){
+    currentQuestionObjectAnswer = q1.Answer;
+}else if (currentQuestionIndex === 2){
+    currentQuestionObjectAnswer = q2.Answer;
+}else if (currentQuestionIndex === 3){
+    currentQuestionObjectAnswer = q3.Answer;
+}
+
+//questionObjectAnswer ie: q0.Answer
 function buttonClicked(clicked_id)
 {
-    alert(clicked_id);
+    // alert(clicked_id);
     // fill array with if answer was right or wrong
+    currentQuestionIndex++;
+    var clickedButton = document.getElementById(clicked_id);
+    if (clickedButton.id == currentQuestionObjectAnswer){
+        console.log("you picked the RIGHT answer");
+    }else{
+        console.log("you picked the WRONG answer");
+    }
     // push the next question and next answers
 }
 
