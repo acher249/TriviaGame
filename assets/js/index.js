@@ -99,6 +99,7 @@ var stopwatch = {
     .then(() => {
         //Start The Game
         stopwatch.start();
+        addButtonHTML(q0_AnswerArray);
         });
     }
 };
@@ -111,14 +112,31 @@ var stopwatch = {
 var rainQuestionArray = ["What is the shape of rain drops?", 
 "What color is rain?", 
 "What is the rainiest city?", 
-"" , 
-"", ]
+"How much rain can fit in a one gallon jug?" , 
+"What state of matter is rain?"];
 
-// var correctAnswer = 
+var q0_AnswerArray = ["square", "droplet", "hexagonal", "rhombus"];
+var q0_Answer = "droplet";
+
+
+//function to add to html
+
+function addButtonHTML(array){
+    for(i=0; i<4; i++){
+        $("#answer" + i).text(array[i]);
+        console.log(array[i]);
+    }
+}
 
 
 
-// Get Weather to set which set of questions
+
+
+
+
+
+
+// Get Weather to decide which set of questions
 var APIKey = "166a433c57516f51dfab1f7edaed8413";
 
 var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
