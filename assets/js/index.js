@@ -112,10 +112,7 @@ var stopwatch = {
     }
 };
 
-// Logic for Questions
-
-//Put questions in Array
-//Put answers in Array
+//QUSETIONS ARRAY *********************************************
 
 var rainQuestionArray = ["What is the shape of rain drops?", 
 "What color is rain?", 
@@ -123,17 +120,27 @@ var rainQuestionArray = ["What is the shape of rain drops?",
 "How much rain can fit in a one gallon jug?" , 
 "What state of matter is rain?"];
 
-//create object for each question.
+//QUESTION OBJECTS**********************************************
 var q0 = {
     AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
     Answer: "droplet"
 }
-
-// var q0_AnswerArray = ["square", "droplet", "hexagonal", "rhombus"];
-// var q0_Answer = "droplet"; //id "answer1"
-// var q1_AnswerArray = ["red", "purple", "blue", "pink"];
-// var q1_Answer = "blue";
-
+var q1 = {
+    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
+    Answer: "droplet"
+}
+var q2 = {
+    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
+    Answer: "droplet"
+}
+var q3 = {
+    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
+    Answer: "droplet"
+}
+var q4 = {
+    AnswerArray: ["square", "droplet", "hexagonal", "rhombus"],
+    Answer: "droplet"
+}
 
 //function to add to text button html. Pass it the AnswersArray.
 function addButtonHTML(answerArray){
