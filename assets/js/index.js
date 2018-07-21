@@ -103,7 +103,7 @@ var stopwatch = {
     swal({
         title: "Get Ready For Trivia!",
         icon: "success",
-        text: "AnswerId the questions before the timer runs out!",
+        text: "Answer the questions before the timer runs out!",
         button: "Start Game", 
     })
     .then(() => {
@@ -113,7 +113,7 @@ var stopwatch = {
         });
     },
 
-    gaveOver: function() {    
+    gaveOver: function() {
     swal({
         title: "You Finished Trivia!",
         icon: "success",
