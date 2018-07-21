@@ -9,6 +9,9 @@ var intervalId;
 var clockRunning = false;
 var currentQuestionIndex = 0;
 
+var correctAnswerCount = 0;
+var incorrectAnswerCount = 0;
+
 // Our stopwatch object ********************************************************
 var stopwatch = {
 
@@ -114,7 +117,7 @@ var stopwatch = {
     swal({
         title: "You Finished Trivia!",
         icon: "success",
-        text: "Good Job!",
+        text: "Correct: " + correctAnswerCount + " ---- Incorrect: " + incorrectAnswerCount,
         button: "Continue", 
     })
     .then(() => {
@@ -183,8 +186,10 @@ function buttonClicked(clicked_id)
     var clickedButton = document.getElementById(clicked_id);
     if (clickedButton.id == currentQuestionObjectAnswer){
         console.log("you picked the RIGHT answer");
+        correctAnswerCount ++;
     }else{
         console.log("you picked the WRONG answer");
+        incorrectAnswerCount ++;
     }
     // fill array with if answer was right or wrong
     currentQuestionIndex++;
@@ -235,6 +240,8 @@ function setHTML(){
 
 
 
+//Was going to get current weather and disply different trivia questions based on
+// current weather. but the API doesn't give Sunny, Rainy, Coudy Response.
 
 // Get Weather to decide which set of questions
 var APIKey = "166a433c57516f51dfab1f7edaed8413";
@@ -248,7 +255,7 @@ $.ajax({
 })
     .then(function(response) {
 
-    // console.log(response);
+    console.log(response);
 
     // Transfer content to HTML
     // $(".city").html("<h1>" + response.name + " Weather Details</h1>");
