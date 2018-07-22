@@ -94,7 +94,7 @@ var stopwatch = {
         $(".timer").text("Time Remaining: " + "00:10"); //Override***
         //if no button clicked
         currentQuestionIndex ++;
-        
+        incorrectAnswerCount++;
         setHTML();
         });
     },
